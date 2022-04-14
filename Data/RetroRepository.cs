@@ -81,6 +81,19 @@ namespace SampleWebApp.Data
             return sortedRetroList;
         }
 
+        List<string> IRetroRepository.GetRetroNames()
+        {
+            List<string> retroNames = new List<string>();
+            var retroList = _context.Retros.ToList();
+
+            foreach(var retro in retroList)
+            {
+                retroNames.Add(retro.RName);
+            }
+            return retroNames;
+
+        }
+
         bool IRetroRepository.IsRetroNameExist(string rName)
         {
            return  _context.Retros.FirstOrDefault(r => r.RName == rName) != null;

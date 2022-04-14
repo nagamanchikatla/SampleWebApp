@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace SampleWebApp.Controllers
 {
@@ -14,7 +15,6 @@ namespace SampleWebApp.Controllers
     public class RetroController: Controller
     {
         private readonly IRetroRepository _repository;
-
         public RetroController(IRetroRepository repository)
         {
             _repository = repository;
@@ -26,7 +26,14 @@ namespace SampleWebApp.Controllers
             return Ok(retro);
         }
 
-        [HttpGet(template: "getretrosbydate")]
+        [HttpGet(template: "getretronames")]
+        public IActionResult GetRetroNames()
+        {
+            List<string> retroNames = _repository.GetRetroNames();
+            return Ok(retroNames);
+        }
+
+        [HttpPost(template: "getretrosbydate")]
         public IActionResult GetRetroByDate(GetByDateDto dto)
         {
             List<Retro> retro = _repository.GetRetroByDate(dto.Date);

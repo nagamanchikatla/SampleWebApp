@@ -28,6 +28,10 @@ namespace SampleWebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(c => c.AddPolicy("AllowOrigin", options => options
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader()));
             services.AddControllers();
             services.AddScoped<IRetroRepository, RetroRepository>();
             services.AddDbContext<RetroDBContext>(options => options.UseInMemoryDatabase(databaseName: "SampleModels"));
@@ -40,6 +44,12 @@ namespace SampleWebApp
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCors(options => options
+            .WithOrigins(new[] { "http://localhost:3000" })
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials()
+            );
 
             app.UseHttpsRedirection();
 

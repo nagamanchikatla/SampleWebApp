@@ -13,5 +13,6 @@ namespace SampleWebApp.Data
         List<Retro> GetRetro();
         List<Retro> GetRetroByDate(string date);
         Feedback AddFeedBack(Feedback feedback);
+        List<string> GetRetroNames();
     }
 }
